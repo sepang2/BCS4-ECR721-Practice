@@ -2,6 +2,6 @@
 
 npm i react-router-dom
 
-# Connect with Metamask
+# Connect with Metamask using its SDK
 
 npm i @metamask/sdk-react

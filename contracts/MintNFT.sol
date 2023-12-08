@@ -14,6 +14,7 @@ contract MintNFT is ERC721Enumerable {
         maxSupply = _maxSupply;
     }
 
+    // NFT 민팅 함수
     function mintNFT() public {
         require(totalSupply() < maxSupply, "No more mint.");
 
@@ -22,12 +23,14 @@ contract MintNFT is ERC721Enumerable {
         _mint(msg.sender, tokenId);
     }
 
+    // NFT 여러개 한번에 민팅하는 함수
     function batchMint(uint _amount) public {
         for(uint i = 0; i < _amount; i++){
             mintNFT();
         }
     }
 
+    // NFT에 URI 저장해주는 함수
     function tokenURI(uint _tokenId) public view override returns(string memory){
         return string(abi.encodePacked(metadataURI, '/', Strings.toString(_tokenId), '.json'));
     }

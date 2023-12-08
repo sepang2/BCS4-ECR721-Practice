@@ -9,6 +9,7 @@ contract MintNFT is ERC721Enumerable {
     string metadataURI;
     uint maxSupply;
 
+    // Deploy시 실행되는 함수
     constructor(string memory _name, string memory _symbol, string memory _metadataURI, uint _maxSupply) ERC721(_name, _symbol) {
         metadataURI = _metadataURI;
         maxSupply = _maxSupply;

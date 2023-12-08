@@ -2,12 +2,14 @@ import { useSDK } from "@metamask/sdk-react";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 import mintNFTABI from "../mintNFT.json";
+import axios from "axios";
 
 const Mint = () => {
   const { sdk, provider } = useSDK();
   const [web3, setWeb3] = useState();
   const [account, setAccount] = useState();
   const [contract, setContract] = useState();
+  const [metadata, setMetadata] = useState();
 
   const onClickMetaMask = async () => {
     try {
@@ -29,13 +31,24 @@ const Mint = () => {
 
   const onClickMint = async () => {
     try {
-      if (!account || !contract) return;
+      //   if (!account || !contract) return;
 
-      const response = await contract.methods.mintNFT().send({
-        from: account,
-      });
+      //   const response = await contract.methods.mintNFT().send({
+      //     from: account,
+      //   });
 
-      console.log(response);
+      const balance = await contract.methods.balanceOf(account).call();
+
+      const newTokenId = await contract.methods
+        .tokenOfOwnerByIndex(account, Number(balance) - 1)
+        .call();
+
+      const metadataURI = await contract.methods
+        .tokenURI(Number(newTokenId))
+        .call();
+
+      const response = await axios.get(metadataURI);
+      setMetadata(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -67,11 +80,12 @@ const Mint = () => {
               {account.substring(0, 7)}...
               {account.substring(account.length - 5)}
             </div>
+
             <button
               onClick={onClickMint}
               className="bg-cyan-100 font-bold text-xl rounded-full px-4 py-1"
             >
-              Mint
+              🌱 Mint
             </button>
             <button
               onClick={onClickLogout}
@@ -79,6 +93,9 @@ const Mint = () => {
             >
               🔒
             </button>
+            <div>
+              {metadata && <img src={metadata.image} alt={metadata.name} />}
+            </div>
           </>
         ) : (
           <button

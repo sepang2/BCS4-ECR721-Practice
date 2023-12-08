@@ -27,6 +27,20 @@ const Mint = () => {
     }
   };
 
+  const onClickMint = async () => {
+    try {
+      if (!account || !contract) return;
+
+      const response = await contract.methods.mintNFT().send({
+        from: account,
+      });
+
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     if (!provider) return;
 
@@ -44,8 +58,6 @@ const Mint = () => {
     );
   }, [web3]);
 
-  useEffect(() => console.log(contract), [contract]);
-
   return (
     <div className="bg-red-100 min-h-screen max-w-screen-md mx-auto flex flex-col justify-center items-center">
       <div className="bg-blue-100 w-full fixed top-0 max-w-screen-md">
@@ -55,7 +67,10 @@ const Mint = () => {
               {account.substring(0, 7)}...
               {account.substring(account.length - 5)}
             </div>
-            <button className="bg-cyan-100 font-bold text-xl rounded-full px-4 py-1">
+            <button
+              onClick={onClickMint}
+              className="bg-cyan-100 font-bold text-xl rounded-full px-4 py-1"
+            >
               Mint
             </button>
             <button

@@ -15,3 +15,9 @@ npm i @metamask/sdk-react
 ```
 npm i web3
 ```
+
+# install axios to get metadata from URL
+
+```
+npm i axios
+```

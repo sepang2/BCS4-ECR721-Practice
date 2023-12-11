@@ -31,7 +31,7 @@ contract MintNFT is ERC721Enumerable {
         }
     }
 
-    // NFT에 URI 저장해주는 함수
+    // NFT의 URI를 반환하는 함수 (프론트에 메타데이터 가져다 쓸라고 만듦)
     function tokenURI(uint _tokenId) public view override returns(string memory){
         return string(abi.encodePacked(metadataURI, '/', Strings.toString(_tokenId), '.json'));
     }

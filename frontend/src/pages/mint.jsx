@@ -9,11 +9,11 @@ const Mint = () => {
 
   const onClickMint = async () => {
     try {
-      //   if (!account || !contract) return;
+      if (!account || !contract) return;
 
-      //   const response = await contract.methods.mintNFT().send({
-      //     from: account,
-      //   });
+      await contract.methods.mintNFT().send({
+        from: account,
+      });
 
       const balance = await contract.methods.balanceOf(account).call();
 
@@ -40,7 +40,18 @@ const Mint = () => {
       >
         🌱 Mint
       </button>
-      <div>{metadata && <img src={metadata.image} alt={metadata.name} />}</div>
+      {metadata && (
+        <div>
+          <img src={metadata.image} alt={metadata.name} />{" "}
+          <div>{metadata.name}</div>
+          <div>{metadata.description}</div>
+          {metadata.attributes.map((v, i) => (
+            <div key={i}>
+              {v.trait_type}: {v.value}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

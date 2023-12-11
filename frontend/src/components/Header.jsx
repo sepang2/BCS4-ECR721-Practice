@@ -27,36 +27,40 @@ const Header = () => {
   };
 
   return (
-    <div className="bg-blue-100 w-full fixed left-1/2 -translate-x-1/2 top-0 max-w-screen-md">
-      <div className="flex justify-between">
-        <Link to="/">Home</Link>
-        <Link to="/mint">Mint</Link>
-      </div>
-      <div>
-        {account ? (
-          <>
-            <div>
-              {account.substring(0, 7)}...
-              {account.substring(account.length - 5)}
+    <>
+      <div className="bg-blue-100 w-full fixed left-1/2 -translate-x-1/2 top-0 max-w-screen-md">
+        <div className="flex justify-between">
+          <Link to="/">Home</Link>
+          <Link to="/mint">Mint</Link>
+        </div>
+        <>
+          {account ? (
+            <div className="flex justify-center items-center gap-4">
+              <div className="rounded-full border border-black px-2 py-1">
+                {account.substring(0, 7)}...
+                {account.substring(account.length - 5)}
+              </div>
+              <button
+                onClick={onClickLogout}
+                className="border border-black text-xl rounded-full px-2 py-1"
+              >
+                🔒
+              </button>
             </div>
-            <button
-              onClick={onClickLogout}
-              className="border border-black text-xl font-semibold rounded-full px-2 py-1"
-            >
-              🔒
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={onClickMetaMask}
-            className="rounded-full px-4 py-1 text-xl font-semibold bg-amber-300 hover:bg-amber-500 focus:bg-amber-300 hover:animate-bounce"
-          >
-            🦊 Login
-          </button>
-        )}
+          ) : (
+            <div className="flex justify-center">
+              <button
+                onClick={onClickMetaMask}
+                className="rounded-full px-4 py-1 text-xl font-semibold bg-amber-300 hover:bg-amber-500 focus:bg-amber-300 hover:animate-bounce"
+              >
+                🦊 Login
+              </button>
+            </div>
+          )}
+        </>
       </div>
       <Outlet />
-    </div>
+    </>
   );
 };
 
